@@ -1,8 +1,8 @@
-package com.to.toDoList.controller;
+package com.to.todolist.controller;
 
-import com.to.toDoList.dtos.LoggedInUser;
-import com.to.toDoList.service.LoginService;
-import com.to.toDoList.service.SessionManagerService;
+import com.to.todolist.dtos.LoggedInUser;
+import com.to.todolist.service.LoginService;
+import com.to.todolist.service.SessionManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {

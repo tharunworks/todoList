@@ -1,4 +1,4 @@
-package com.to.toDoList;
+package com.to.todolist;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

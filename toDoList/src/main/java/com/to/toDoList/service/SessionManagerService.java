@@ -1,6 +1,6 @@
-package com.to.toDoList.service;
+package com.to.todolist.service;
 
-import com.to.toDoList.dtos.LoggedInUser;
+import com.to.todolist.dtos.LoggedInUser;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 

@@ -1,4 +1,4 @@
-package com.to.toDoList.dtos;
+package com.to.todolist.dtos;
 
 public class LoggedInUser {
 

@@ -1,4 +1,4 @@
-package com.to.toDoList.service;
+package com.to.todolist.service;
 
 import org.springframework.stereotype.Service;
 
