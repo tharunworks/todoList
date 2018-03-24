@@ -1,6 +1,7 @@
 package com.to.todolist.controller;
 
 import com.to.todolist.dtos.LoggedInUser;
+import com.to.todolist.exceptions.AuthenticationException;
 import com.to.todolist.service.LoginService;
 import com.to.todolist.service.SessionManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +44,12 @@ public class LoginController {
         //note:model.put(#placeholder, #value) in welcome.jspx
         model.put("name", name);
         model.put("password", password);
-        LoggedInUser loggedInUser = sessionManagerService.setSessionUser(model, request, response);
+        sessionManagerService.setSessionUser(model, request, response);
         return "welcome";
     }
 
     @RequestMapping(value = "/list-todos", method = RequestMethod.GET)
-    public String showToDoPage(ModelMap model, HttpServletRequest request, HttpServletResponse response){
+    public String showToDoPage(ModelMap model, HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         LoggedInUser loggedInUser = sessionManagerService.getLoggedInUser(request, response);
         model.put("checkName", loggedInUser.getFullName());
         model.put("checkJsessionId", loggedInUser.getJsessionId());

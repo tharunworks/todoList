@@ -21,4 +21,8 @@ public class LoggedInUser {
     public void setJsessionId(String jsessionId) {
         this.jsessionId = jsessionId;
     }
+
+    public LoggedInUser() {
+        //Do Nothing
+    }
 }
