@@ -3,6 +3,7 @@ package com.to.todolist.controller;
 import com.to.todolist.dtos.LoggedInUser;
 import com.to.todolist.dtos.LoginDto;
 import com.to.todolist.exceptions.AuthenticationException;
+import com.to.todolist.repositories.TaskRepository;
 import com.to.todolist.service.LoginService;
 import com.to.todolist.service.SessionManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class LoginController {
 
     @Autowired
     private SessionManagerService sessionManagerService;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @RequestMapping(value="/login", method = RequestMethod.GET)
     public String showLoginPage(ModelMap model){
@@ -58,6 +62,7 @@ public class LoginController {
         LoggedInUser loggedInUser = sessionManagerService.getLoggedInUser(request, response);
         model.put("checkName", loggedInUser.getFullName());
         model.put("checkJsessionId", loggedInUser.getJsessionId());
+        model.put("tasks", taskRepository.findAllByUserId(loggedInUser.getUserId()));
         return "list-todos";
     }
 
