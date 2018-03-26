@@ -36,7 +36,7 @@ public class LoginController {
         return "login";
     }
     @RequestMapping(value="/login", method = RequestMethod.POST)
-    public String showWelcomePage(ModelMap model, @RequestParam String userEmail, @RequestParam String password, HttpServletRequest request, HttpServletResponse response){
+    public String showWelcomePage(ModelMap model, @RequestParam(value = "name") String userEmail, @RequestParam String password, HttpServletRequest request, HttpServletResponse response){
         boolean isValidUser = loginService.validateUser(userEmail, password);
         if (!isValidUser) {
             //note:model.put(#placeholder, #value) in login.jsp
