@@ -1,6 +1,7 @@
 package com.to.todolist.controller;
 
 import com.to.todolist.dtos.LoggedInUser;
+import com.to.todolist.dtos.LoginDto;
 import com.to.todolist.exceptions.AuthenticationException;
 import com.to.todolist.service.LoginService;
 import com.to.todolist.service.SessionManagerService;
@@ -10,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,10 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
 
     @Autowired
-    SessionManagerService sessionManagerService;
+    private SessionManagerService sessionManagerService;
 
     @RequestMapping(value="/login", method = RequestMethod.GET)
     public String showLoginPage(ModelMap model){
@@ -34,17 +36,20 @@ public class LoginController {
         return "login";
     }
     @RequestMapping(value="/login", method = RequestMethod.POST)
-    public String showWelcomePage(ModelMap model, @RequestParam String name, @RequestParam String password, HttpServletRequest request, HttpServletResponse response){
-        boolean isValidUser = loginService.validateUser(name, password);
+    public String showWelcomePage(ModelMap model, @RequestParam String userEmail, @RequestParam String password, HttpServletRequest request, HttpServletResponse response){
+        boolean isValidUser = loginService.validateUser(userEmail, password);
         if (!isValidUser) {
             //note:model.put(#placeholder, #value) in login.jsp
             model.put("errorMessage", "Invalid Credentials");
             return "login";
         }
         //note:model.put(#placeholder, #value) in welcome.jspx
-        model.put("name", name);
-        model.put("password", password);
-        sessionManagerService.setSessionUser(model, request, response);
+        LoginDto loginDto = new LoginDto();
+        loginDto.setUserEmail(userEmail);
+        loginDto.setPassword(password);
+        model.put("name", loginDto.getUserEmail());
+        model.put("password", loginDto.getPassword());
+        sessionManagerService.setSessionUser(loginDto, request, response);
         return "welcome";
     }
 
@@ -59,6 +64,6 @@ public class LoginController {
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, HttpServletResponse response){
         sessionManagerService.logoutLoggedInUser(request, response);
-        return "login";
+        return "redirect:login";
     }
 }
